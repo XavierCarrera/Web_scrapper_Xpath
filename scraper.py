@@ -1,9 +1,16 @@
-import requests
-import lxml.html as html
-import os
-import datetime
+# At the beginning we import the needed libraries. 
 
-HOME_URL = 'https://www.larepublica.co/'
+import requests # for making requests to the website
+import lxml.html as html # for processing xml and html in Python and giving it an alias
+import os # for creating directories and files
+import datetime # to print datetimes
+
+# For this project, I decided to filter the news so that I could extract those 
+# on the economic section. 
+
+HOME_URL = 'https://www.larepublica.co/' # website to scrap
+
+# Next we have the xpath expressions, in order to filter the economic posts. 
 
 XPATH_LINK_TO_ARTICLE = '//h2//a[@class="economiaSect"]/@href'
 XPATH_TITLE = '//div[@class="row OpeningPostNormal"]//h2//a[@class="economiaSect"]/text()'
@@ -11,6 +18,9 @@ XPATH_SUMMARY = '//div[@class="lead"]/p/text()'
 XPATH_BODY = '//div[@class="html-content"]/p[not(@class)]/text()'
 
 def parse_news(link, today):
+    
+    #Here we parse titles, summaries and body text of the articles to be extracted
+    
     try:
         response = requests.get(link)
         if response.status_code == 200:
@@ -40,6 +50,9 @@ def parse_news(link, today):
 
 
 def parse_links():
+
+    # Here we parse the links we're going to extract
+
     try:
         response = requests.get(HOME_URL)
         if response.status_code == 200:
